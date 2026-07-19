@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Flat Report</title>
 
 <style>
+
+body{
+    text-align:center;
+    font-family:Arial;
+}
+
+select, button{
+    padding:10px;
+    margin:5px;
+}
+
+#report{
+    width:90%;
+    max-width:500px;
+    margin:auto;
+}
+
 .box{
     border:1px solid #000;
     padding:10px;
     margin:10px 0;
+    text-align:left;
 }
+
 </style>
 
 </head>
 
+
 <body>
+
 
 <h2>BuildTrack Pro Report</h2>
 
+
 <select id="flatNo">
+
 <option>101</option>
 <option>102</option>
 <option>201</option>
@@ -32,10 +56,17 @@
 <option>602</option>
 <option>701</option>
 <option>702</option>
+
 </select>
 
+
+<br>
+
+
 <button onclick="showReport()">View Report</button>
+
 <button onclick="printReport()">Print Report</button>
+
 
 
 <h2 id="title"></h2>
@@ -47,11 +78,13 @@
 
 <script>
 
+
 function showReport(){
 
 
 let flat =
 document.getElementById("flatNo").value;
+
 
 
 document.getElementById("title").innerHTML =
@@ -78,11 +111,13 @@ Other:[]
 
 data.forEach(function(item){
 
+
 if(category[item.type]){
 
 category[item.type].push(item.note);
 
 }
+
 
 });
 
@@ -97,27 +132,37 @@ for(let type in category){
 
 html += "<div class='box'>";
 
+
 html += "<h3>"+type+"</h3>";
+
 
 
 if(category[type].length==0){
 
+
 html += "No Work";
+
 
 }
 
 else{
 
+
 category[type].forEach(function(note,index){
+
 
 html += (index+1)+") "+note+"<br>";
 
+
 });
+
 
 }
 
 
+
 html += "</div>";
+
 
 
 }
@@ -130,7 +175,97 @@ document.getElementById("report").innerHTML = html;
 
 }
 
+
+
+
+
+function printReport(){
+
+
+let content =
+document.getElementById("report").innerHTML;
+
+
+let title =
+document.getElementById("title").innerHTML;
+
+
+
+let newWindow =
+window.open("", "", "width=600,height=600");
+
+
+
+newWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Print Report</title>
+
+
+<style>
+
+body{
+
+font-family:Arial;
+text-align:center;
+
+}
+
+
+.box{
+
+border:1px solid black;
+padding:10px;
+margin:10px;
+text-align:left;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<h2>BuildTrack Pro Report</h2>
+
+
+<h3>${title}</h3>
+
+
+${content}
+
+
+
+</body>
+
+
+</html>
+
+`);
+
+
+
+newWindow.document.close();
+
+
+newWindow.print();
+
+
+}
+
+
+
 </script>
+
+
 
 </body>
 </html>
