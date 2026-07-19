@@ -60,4 +60,13 @@ window.location.href="report.html";
 
 
 </body>
-</html>
+</html><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch((err) => console.log("Service Worker Error", err));
+  });
+}
+</script><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1976d2">
