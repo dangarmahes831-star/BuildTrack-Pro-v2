@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>All Report</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 
@@ -21,7 +24,7 @@ body{
     box-shadow:0 0 10px #aaa;
 }
 
-select, button{
+select,button{
     width:100%;
     padding:12px;
     margin-top:10px;
@@ -49,9 +52,12 @@ button{
 
 </head>
 
+
 <body>
 
+
 <div class="container">
+
 
 <h2>📋 All Work Report</h2>
 
@@ -71,7 +77,10 @@ button{
 <button onclick="showReport()">View Report</button>
 
 
-<div class="report" id="report"></div>
+<button onclick="downloadPDF()">Download PDF</button>
+
+
+<div id="report" class="report"></div>
 
 
 </div>
@@ -89,19 +98,24 @@ let flats=[
 ];
 
 
+let reportData=[];
+
+
 
 function showReport(){
 
 
-let select =
+let type =
 document.getElementById("category").value;
 
 
-let output =
+let box =
 document.getElementById("report");
 
 
-output.innerHTML="";
+box.innerHTML="";
+
+reportData=[];
 
 
 flats.forEach(function(flat){
@@ -111,14 +125,20 @@ let data =
 JSON.parse(localStorage.getItem(flat)) || [];
 
 
-
 data.forEach(function(item){
 
 
-if(select=="All" || item.type==select){
+if(type=="All" || item.type==type){
 
 
-output.innerHTML +=
+reportData.push(
+"Flat No : "+flat+
+"\nWork : "+item.type+
+"\nDetail : "+item.note
+);
+
+
+box.innerHTML +=
 
 "<p>"+
 "<b>Flat No : "+flat+"</b><br>"+
@@ -126,6 +146,7 @@ output.innerHTML +=
 "<br>Detail : "+item.note+
 "</p>";
 
+
 }
 
 
@@ -136,11 +157,59 @@ output.innerHTML +=
 
 
 
-if(output.innerHTML==""){
+if(reportData.length==0){
 
-output.innerHTML="<p>No Work Found</p>";
+box.innerHTML="<p>No Work Found</p>";
+
+reportData.push("No Work Found");
 
 }
+
+
+}
+
+
+
+function downloadPDF(){
+
+
+const {jsPDF}=window.jspdf;
+
+
+let pdf=new jsPDF();
+
+
+pdf.text("BuildTrack Pro Work Report",10,15);
+
+
+let y=30;
+
+
+reportData.forEach(function(t){
+
+
+let lines=pdf.splitTextToSize(t,180);
+
+
+pdf.text(lines,10,y);
+
+
+y=y+(lines.length*8);
+
+
+if(y>280){
+
+pdf.addPage();
+
+y=20;
+
+}
+
+
+});
+
+
+pdf.save("All_Report.pdf");
 
 
 }
