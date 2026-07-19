@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flat Report</title>
+
+<style>
+.box{
+    border:1px solid #000;
+    padding:10px;
+    margin:10px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>BuildTrack Pro Report</h2>
+
+<select id="flatNo">
+<option>101</option>
+<option>102</option>
+<option>201</option>
+<option>202</option>
+<option>301</option>
+<option>302</option>
+<option>401</option>
+<option>402</option>
+<option>501</option>
+<option>502</option>
+<option>601</option>
+<option>602</option>
+<option>701</option>
+<option>702</option>
+</select>
+
+<button onclick="showReport()">View Report</button>
+<button onclick="printReport()">Print Report</button>
+
+
+<h2 id="title"></h2>
+
+
+<div id="report"></div>
+
+
+
+<script>
+
+function showReport(){
+
+
+let flat =
+document.getElementById("flatNo").value;
+
+
+document.getElementById("title").innerHTML =
+"Flat No : " + flat;
+
+
+
+let data =
+JSON.parse(localStorage.getItem(flat)) || [];
+
+
+
+let category = {
+
+Civil:[],
+Electrical:[],
+Plumbing:[],
+Tiles:[],
+Other:[]
+
+};
+
+
+
+data.forEach(function(item){
+
+if(category[item.type]){
+
+category[item.type].push(item.note);
+
+}
+
+});
+
+
+
+let html="";
+
+
+
+for(let type in category){
+
+
+html += "<div class='box'>";
+
+html += "<h3>"+type+"</h3>";
+
+
+if(category[type].length==0){
+
+html += "No Work";
+
+}
+
+else{
+
+category[type].forEach(function(note,index){
+
+html += (index+1)+") "+note+"<br>";
+
+});
+
+}
+
+
+html += "</div>";
+
+
+}
+
+
+
+document.getElementById("report").innerHTML = html;
+
+
+
+}
+
+</script>
+
+</body>
+</html>
