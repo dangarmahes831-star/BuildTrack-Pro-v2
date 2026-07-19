@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>All Reports</title>
 
-<title>All Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -21,199 +22,92 @@ body{
     background:white;
     padding:20px;
     border-radius:12px;
-    box-shadow:0 0 10px #aaa;
+    box-shadow:0 0 10px #ccc;
 }
 
-select,button{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    font-size:16px;
+h2{
+    text-align:center;
+}
+
+.report{
+    background:#eeeeee;
+    padding:15px;
+    margin:10px 0;
+    border-radius:8px;
 }
 
 button{
+    width:100%;
+    padding:14px;
     background:#1976d2;
     color:white;
     border:none;
     border-radius:8px;
-}
-
-.report{
-    margin-top:20px;
-}
-
-.report p{
-    background:#eee;
-    padding:10px;
-    border-radius:8px;
+    font-size:18px;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
+<h2>BuildTrack Pro</h2>
 
-<h2>📋 All Work Report</h2>
+<div class="report">
+Customer Report
+</div>
 
+<div class="report">
+Worker Report
+</div>
 
-<select id="category">
+<div class="report">
+Material Report
+</div>
 
-<option value="All">All</option>
-<option value="Civil">Civil</option>
-<option value="Electrical">Electrical</option>
-<option value="Plumbing">Plumbing</option>
-<option value="Tiles">Tiles</option>
-<option value="Other">Other</option>
+<div class="report">
+Billing Report
+</div>
 
-</select>
+<br>
 
-
-<button onclick="showReport()">View Report</button>
-
-
-<button onclick="downloadPDF()">Download PDF</button>
-
-
-<div id="report" class="report"></div>
-
+<button onclick="createPDF()">
+Download All Report PDF
+</button>
 
 </div>
 
 
-
 <script>
 
+function createPDF(){
 
-let flats=[
-"101","102","201","202",
-"301","302","401","402",
-"501","502","601","602",
-"701","702"
-];
+const { jsPDF } = window.jspdf;
 
+let pdf = new jsPDF();
 
-let reportData=[];
+pdf.setFontSize(18);
+pdf.text("BuildTrack Pro",20,20);
 
+pdf.setFontSize(14);
 
+pdf.text("All Reports",20,35);
 
-function showReport(){
+pdf.text("1. Customer Report",20,55);
 
+pdf.text("2. Worker Report",20,70);
 
-let type =
-document.getElementById("category").value;
+pdf.text("3. Material Report",20,85);
 
-
-let box =
-document.getElementById("report");
+pdf.text("4. Billing Report",20,100);
 
 
-box.innerHTML="";
-
-reportData=[];
-
-
-flats.forEach(function(flat){
-
-
-let data =
-JSON.parse(localStorage.getItem(flat)) || [];
-
-
-data.forEach(function(item){
-
-
-if(type=="All" || item.type==type){
-
-
-reportData.push(
-"Flat No : "+flat+
-"\nWork : "+item.type+
-"\nDetail : "+item.note
-);
-
-
-box.innerHTML +=
-
-"<p>"+
-"<b>Flat No : "+flat+"</b><br>"+
-"Work : "+item.type+
-"<br>Detail : "+item.note+
-"</p>";
-
+pdf.save("BuildTrack_All_Report.pdf");
 
 }
-
-
-});
-
-
-});
-
-
-
-if(reportData.length==0){
-
-box.innerHTML="<p>No Work Found</p>";
-
-reportData.push("No Work Found");
-
-}
-
-
-}
-
-
-
-function downloadPDF(){
-
-
-const {jsPDF}=window.jspdf;
-
-
-let pdf=new jsPDF();
-
-
-pdf.text("BuildTrack Pro Work Report",10,15);
-
-
-let y=30;
-
-
-reportData.forEach(function(t){
-
-
-let lines=pdf.splitTextToSize(t,180);
-
-
-pdf.text(lines,10,y);
-
-
-y=y+(lines.length*8);
-
-
-if(y>280){
-
-pdf.addPage();
-
-y=20;
-
-}
-
-
-});
-
-
-pdf.save("All_Report.pdf");
-
-
-}
-
 
 </script>
 
