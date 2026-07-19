@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildTrack Pro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>BuildTrack Pro</h1>
+
+<h3>Enter PIN</h3>
+
+<input type="password" id="pin" maxlength="4" placeholder="0000">
+
+<br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+</div>
+
+
+<div id="dashboard" style="display:none; text-align:center;">
+
+<h2>Dashboard</h2>
+
+<button onclick="openFlat()">🧱 Flat</button>
+
+<br><br>
+
+<button onclick="openReport()">📊 Report</button>
+
+</div>
+
+
+<script src="script.js"></script>
+
+<script>
+
+function openFlat(){
+
+window.location.href="flat.html";
+
+}
+
+
+function openReport(){
+
+window.location.href="report.html";
+
+}
+
+</script>
+
+
+</body>
+</html>
