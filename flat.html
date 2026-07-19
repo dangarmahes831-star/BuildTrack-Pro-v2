@@ -2,9 +2,69 @@
 <html>
 <head>
 <title>Flat Detail</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:20px;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f2f2f2;
+    font-family:Arial;
+}
+
+.container{
+    width:90%;
+    max-width:500px;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px #aaa;
+    text-align:center;
+}
+
+select, textarea, button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    font-size:16px;
+}
+
+textarea{
+    height:100px;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+
+#list p{
+    text-align:left;
+    background:#eee;
+    padding:10px;
+    border-radius:8px;
+}
+
+</style>
+
 </head>
 
+
 <body>
+
+<div class="container">
+
 
 <h2>Flat Select</h2>
 
@@ -25,6 +85,7 @@
 <option>702</option>
 </select>
 
+
 <button onclick="openFlat()">Open Flat</button>
 
 
@@ -32,21 +93,23 @@
 
 <hr>
 
+
 <h3>Add Work Detail</h3>
 
+
 <select id="type">
+
 <option>Civil</option>
 <option>Electrical</option>
 <option>Plumbing</option>
 <option>Tiles</option>
 <option>Other</option>
+
 </select>
 
-<br><br>
 
 <textarea id="note" placeholder="Work Detail લખો"></textarea>
 
-<br><br>
 
 <button onclick="addWork()">Add</button>
 
@@ -54,6 +117,10 @@
 <h3>Work List</h3>
 
 <div id="list"></div>
+
+
+</div>
+
 
 
 <script>
@@ -78,12 +145,14 @@ showWork();
 
 
 
-// Main Add Work
+// Add Work
 function addWork(){
 
 if(currentFlat==""){
+
 alert("પહેલા Flat Open કરો");
 return;
+
 }
 
 
@@ -122,7 +191,8 @@ showWork();
 
 
 
-// Show Work List
+
+// Show Work
 function showWork(){
 
 let list =
@@ -147,9 +217,8 @@ list.innerHTML +=
 "<b>"+item.type+"</b> - "+
 item.note+
 
-" <button onclick='addMore("+index+")'>Add</button>"+
-
-" <button onclick='deleteWork("+index+")'>Delete</button>"+
+"<br><br><button onclick='addMore("+index+")'>Add More</button> "+
+"<button onclick='deleteWork("+index+")'>Delete</button>"+
 
 "</p>";
 
@@ -157,6 +226,7 @@ item.note+
 
 
 }
+
 
 
 
@@ -192,8 +262,8 @@ showWork();
 
 }
 
-
 }
+
 
 
 
