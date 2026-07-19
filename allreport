@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>All Report</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:20px;
+    background:#f2f2f2;
+    font-family:Arial;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px #aaa;
+}
+
+select, button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    font-size:16px;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+    border-radius:8px;
+}
+
+.report{
+    margin-top:20px;
+}
+
+.report p{
+    background:#eee;
+    padding:10px;
+    border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>📋 All Work Report</h2>
+
+
+<select id="category">
+
+<option value="All">All</option>
+<option value="Civil">Civil</option>
+<option value="Electrical">Electrical</option>
+<option value="Plumbing">Plumbing</option>
+<option value="Tiles">Tiles</option>
+<option value="Other">Other</option>
+
+</select>
+
+
+<button onclick="showReport()">View Report</button>
+
+
+<div class="report" id="report"></div>
+
+
+</div>
+
+
+
+<script>
+
+
+let flats=[
+"101","102","201","202",
+"301","302","401","402",
+"501","502","601","602",
+"701","702"
+];
+
+
+
+function showReport(){
+
+
+let select =
+document.getElementById("category").value;
+
+
+let output =
+document.getElementById("report");
+
+
+output.innerHTML="";
+
+
+flats.forEach(function(flat){
+
+
+let data =
+JSON.parse(localStorage.getItem(flat)) || [];
+
+
+
+data.forEach(function(item){
+
+
+if(select=="All" || item.type==select){
+
+
+output.innerHTML +=
+
+"<p>"+
+"<b>Flat No : "+flat+"</b><br>"+
+"Work : "+item.type+
+"<br>Detail : "+item.note+
+"</p>";
+
+}
+
+
+});
+
+
+});
+
+
+
+if(output.innerHTML==""){
+
+output.innerHTML="<p>No Work Found</p>";
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+</html>
