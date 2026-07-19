@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flat Detail</title>
+</head>
+
+<body>
+
+<h2>Flat Select</h2>
+
+<select id="flatNo">
+<option>101</option>
+<option>102</option>
+<option>201</option>
+<option>202</option>
+<option>301</option>
+<option>302</option>
+<option>401</option>
+<option>402</option>
+<option>501</option>
+<option>502</option>
+<option>601</option>
+<option>602</option>
+<option>701</option>
+<option>702</option>
+</select>
+
+<button onclick="openFlat()">Open Flat</button>
+
+
+<h2 id="title"></h2>
+
+<hr>
+
+<h3>Add Work Detail</h3>
+
+<select id="type">
+<option>Civil</option>
+<option>Electrical</option>
+<option>Plumbing</option>
+<option>Tiles</option>
+<option>Other</option>
+</select>
+
+<br><br>
+
+<textarea id="note" placeholder="Work Detail લખો"></textarea>
+
+<br><br>
+
+<button onclick="addWork()">Add</button>
+
+
+<h3>Work List</h3>
+
+<div id="list"></div>
+
+
+<script>
+
+let currentFlat="";
+
+
+// Open Flat
+function openFlat(){
+
+currentFlat =
+document.getElementById("flatNo").value;
+
+
+document.getElementById("title").innerHTML =
+"Flat No : "+currentFlat;
+
+
+showWork();
+
+}
+
+
+
+// Main Add Work
+function addWork(){
+
+if(currentFlat==""){
+alert("પહેલા Flat Open કરો");
+return;
+}
+
+
+let type =
+document.getElementById("type").value;
+
+
+let note =
+document.getElementById("note").value;
+
+
+let data =
+JSON.parse(localStorage.getItem(currentFlat)) || [];
+
+
+data.push({
+
+type:type,
+note:note
+
+});
+
+
+localStorage.setItem(
+currentFlat,
+JSON.stringify(data)
+);
+
+
+document.getElementById("note").value="";
+
+
+showWork();
+
+}
+
+
+
+// Show Work List
+function showWork(){
+
+let list =
+document.getElementById("list");
+
+
+list.innerHTML="";
+
+
+let data =
+JSON.parse(localStorage.getItem(currentFlat)) || [];
+
+
+
+data.forEach(function(item,index){
+
+
+list.innerHTML +=
+
+"<p>"+
+(index+1)+") "+
+"<b>"+item.type+"</b> - "+
+item.note+
+
+" <button onclick='addMore("+index+")'>Add</button>"+
+
+" <button onclick='deleteWork("+index+")'>Delete</button>"+
+
+"</p>";
+
+});
+
+
+}
+
+
+
+// Add More Detail
+function addMore(index){
+
+
+let data =
+JSON.parse(localStorage.getItem(currentFlat)) || [];
+
+
+let note =
+prompt(data[index].type+" માટે નવી Detail લખો");
+
+
+if(note!=""){
+
+data.push({
+
+type:data[index].type,
+note:note
+
+});
+
+
+localStorage.setItem(
+currentFlat,
+JSON.stringify(data)
+);
+
+
+showWork();
+
+}
+
+
+}
+
+
+
+// Delete Work
+function deleteWork(index){
+
+
+let data =
+JSON.parse(localStorage.getItem(currentFlat)) || [];
+
+
+data.splice(index,1);
+
+
+localStorage.setItem(
+currentFlat,
+JSON.stringify(data)
+);
+
+
+showWork();
+
+}
+
+
+</script>
+
+
+</body>
+</html>
